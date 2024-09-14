@@ -1,0 +1,451 @@
+Instagram ka database schema bahut complex hai kyunki isme users, posts, comments, likes, followers, aur direct messages jaise kayi entities hoti hain. Main tumhe ek simplified high-level overview deta hoon:
+
+# 1. Users Table (Users)
+    user_id (Primary Key)
+    username
+    email
+    password
+    full_name   
+    bio
+    profile_picture_url
+    website
+    created_at
+    updated_at
+    is_verified
+    access_token
+    refresh_token
+    is_private
+# 2. Posts Table (Posts)
+    post_id (Primary Key)
+    user_id (Foreign Key to Users)
+    image_url
+    caption
+    location
+    created_at
+    updated_at
+    is_archived
+    is_deleted
+# 3. Comments Table (Comments)
+    comment_id (Primary Key)
+    post_id (Foreign Key to Posts)
+    user_id (Foreign Key to Users)
+    comment_text
+    created_at
+    updated_at
+    is_deleted
+# 4. Likes Table (Likes)
+    like_id (Primary Key)
+    post_id (Foreign Key to Posts)
+    user_id (Foreign Key to Users)
+    created_at
+# 5. Followers Table (Followers)
+    follower_id (Primary Key)
+    user_id (Foreign Key to Users) -- The person being followed
+    follower_user_id (Foreign Key to Users) -- The person following
+    created_at
+# 6. Direct Messages Table (DirectMessages)
+    message_id (Primary Key)
+    sender_id (Foreign Key to Users)
+    receiver_id (Foreign Key to Users)
+    message_text
+    image_url
+    created_at
+    is_seen
+    is_deleted
+# 7. Stories Table (Stories)
+    story_id (Primary Key)
+    user_id (Foreign Key to Users)
+    image_url
+    video_url
+    created_at
+    expires_at
+    is_archived
+# 8. Tags Table (Tags)
+    tag_id (Primary Key)
+    tag_name
+    created_at
+# 9. Post Tags Table (PostTags)
+    post_tag_id (Primary Key)
+    post_id (Foreign Key to Posts)
+    tag_id (Foreign Key to Tags)
+# 10. Post Mentions Table (PostMentions)
+    mention_id (Primary Key)
+    post_id (Foreign Key to Posts)
+    user_id (Foreign Key to Users)
+# 11. Notifications Table (Notifications)
+    notification_id (Primary Key)
+    user_id (Foreign Key to Users)
+    type (e.g., like, comment, follow, mention, etc.)
+    source_user_id (Foreign Key to Users)
+    post_id (Foreign Key to Posts, Nullable)
+    comment_id (Foreign Key to Comments, Nullable)
+    created_at
+    is_read
+# 12. Saved Posts Table (SavedPosts)
+    save_id (Primary Key)
+    user_id (Foreign Key to Users)
+    post_id (Foreign Key to Posts)
+    created_at
+# 13. Explore Data Table (ExploreData)
+    explore_id (Primary Key)
+    user_id (Foreign Key to Users)
+    post_id (Foreign Key to Posts)
+    created_at
+# 14. Hashtags Table (Hashtags)
+    hashtag_id (Primary Key)
+    hashtag_name
+    created_at
+15. Post Hashtags Table (PostHashtags)
+    post_hashtag_id (Primary Key)
+    post_id (Foreign Key to Posts)
+    hashtag_id (Foreign Key to Hashtags)
+# 16. Activity Log Table (ActivityLog)
+    activity_id (Primary Key)
+    user_id (Foreign Key to Users)
+    activity_type
+    activity_details
+    created_at
+
+
+
+Yeh schema high-level overview hai aur Instagram jaise complex platform ke backend mein aur bhi details aur optimizations ho sakte hain. Har table ke andar indexes, constraints, aur relationship definitions hoti hain jo database ki performance ko improve karte hain.
+
+Agar tumhe kisi specific part ya detail ke baare mein aur information chahiye ho, toh batana!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+users [icon: user, color: blue] {
+    id string pk
+    username string
+    email string
+    avatar string
+    phone string
+    blocked string[]
+    createdAt string
+    updatedAt string
+}
+
+chat [icon : chat , color : yellow]{
+  id string pk
+  createdAt date
+  updatedAt date
+  messages object[]
+}
+userChats [icon: command , color:white] {
+  id string pk
+  chats object[]
+}
+
+users.id - userChats.id
+userChats < chat
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+
+ // This is Schema for Instagram Application 
+
+users [icon:user,color: blue]{
+  user_id pk
+  username 
+  email 
+  password 
+  full_name 
+  bio 
+  profile_picture_url
+  website 
+  is_verified
+  is_private
+  timestamps
+}
+
+posts [icon:postman , color: green]{
+  post_id pk 
+  user_id fk
+  image_url 
+  caption 
+  location 
+  is_archived 
+  is_deleted
+  timestamps
+}
+
+comments [icon:comment , color:pink]{
+  comment_id pk
+  post_id fk
+  user_id fk
+  comment_text
+  is_deleted 
+  timestamps
+}
+
+likes [icon:heart , color:red]{
+  like_id pk 
+  post_id fk
+  user_id fk
+  timestamps
+}
+
+followers [icon:users , color:purple]{
+  follower_id pk 
+  user_id fk 
+  follower_user_id fk 
+  timestamps
+}
+
+messages [icon:messenger,color:grey]{
+  message_id pk
+  sender_id fk
+  receiver_id fk
+  message_text 
+  image_url 
+  is_seen 
+  is_deleted 
+  timestamps
+}
+
+stories [icon:circle,color:red]{
+  story_id pk 
+  user_id fk 
+  image_url 
+  video_url 
+  expires_at
+  is_archived
+  timestamps 
+}
+
+tags [icon:tag,color:purple]{
+  tag_id pk 
+  tag_name 
+  timestamps 
+}
+
+postTags [icon:postgres,color:aqua]{
+  post_tag_id pk 
+  post_id fk 
+  tag_id fk 
+}
+
+postMentions [icon:magento,color:maroon]{
+  mention_id pk
+  post_id fk 
+  user_id fk 
+}
+notifications [icon:azure-notification-hubs,color:white]{
+  notification_id pk 
+  user_id fk 
+  type 
+  source_user_id fk
+  post_id fk 
+  comment_id fk 
+  is_read 
+  timestamps 
+}
+
+savedPosts [icon:save,color:yellow ]{
+  save_id pk 
+  user_id fk 
+  post_id fk 
+  timestamps 
+}
+
+exploreData [icon:aws-cost-explorer,color:black]{
+  explore_id pk 
+  user_id fk 
+  post_id fk 
+  timestamps 
+}
+
+hashTags [icon:hash,color:green]{
+  hashtag_id pk 
+  hashtag_name 
+  timestamps 
+}
+
+postHashtag [icon:haskell,color:purple]{
+  post_hashtag_id pk 
+  post_id fk 
+  hashtag_id fk
+}
+
+activityLog [icon:activity,color:aqua]{
+  acitivity_id pk 
+  user_id fk 
+  activity_type 
+  activity_details 
+  timestamps 
+}
+
+
+// Relationships between schema's for Instagram Application
+
+users < posts
+posts < comments 
+users < comments 
+posts < likes 
+users < likes 
+users <> followers 
+users < messages
+users < stories  
+posts <> tags 
+posts <> postMentions 
+users < notifications 
+users < savedPosts 
+users < exploreData 
+posts <> hashTags 
+users < activityLog 
+
+
+
+// something different 
+messages.sender_id - users.user_id
+messages.receiver_id - users.user_id
+
+posts.user_id - users.user_id
+comments.user_id - users.user_id
+comments.post_id - posts.post_id
+likes.post_id - posts.post_id
+likes.user_id - users.user_id
+followers.user_id - users.user_id
+followers.follower_user_id  - users.user_id
+stories.user_id - users.user_id
+
+
+
+
+
+
+
+
+
+
+
+❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️
+
+
+User Management --> 
+  Registration 
+  Login 
+  Logout 
+  Forgot Password 
+  Change Password 
+  Profile update 
+  Account Verification 
+  Account Deactivation 
+  Account Deletion 
+  current user
+  All User  
+  check-username 
+  verify-code 
+  avatar 
+  refresh-token 
+
+
+
+Post Management --> 
+  Create post 
+  Edit post 
+  Delete post 
+  Archive post 
+  Like post 
+  comment post 
+  Unlike post 
+  save post 
+  share post 
+  Report post 
+
+
+Comment Management -->
+  Add comment 
+  Edit comment  
+  Delete comment 
+  Like comment 
+  Unlike comment 
+  Reply to comment 
+
+Story Managemnet -->
+  Create story 
+  Delete story 
+  Archive story 
+  View story 
+  React to Story 
+  Highlight Story 
+
+
+Message Management -->
+  Send message 
+  Recieve message 
+  Delete message 
+  Mark as read 
+  Block user 
+  Unblock user 
+  Mute conversation
+
+Follower Mangement -->
+  Foolow user 
+  Unfollow user 
+  Following user 
+  Accept follow request 
+  Decline follow request 
+  Remove follower 
+  View follower
+  View Followers 
+  View Following 
+     
+
