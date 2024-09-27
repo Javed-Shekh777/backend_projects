@@ -97,11 +97,11 @@ const userSchema = new mongoose.Schema({
     last_login: {
         type: Date
     },
-    device_info: [{
-        device_type: { type: String },
-        device_id: { type: String },
-        login_time: { type: Date }
-    }],
+    // device_info: [{
+    //     device_type: { type: String,default:"" },
+    //     device_id: { type: String,default:"" },
+    //     login_time: { type: Date,default:"" }
+    // }],
 
     usage_data: {
         total_likes: { type: Number },

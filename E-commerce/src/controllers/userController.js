@@ -169,9 +169,6 @@ const getAllUser = asyncHandler (async (req,res)=>{
 
     const loggedIn = req.user;
 
-
-
-
     if(!loggedIn){
         throw new ApiError(404,"Unauthorized request.");
     }
@@ -196,11 +193,14 @@ const getAllUser = asyncHandler (async (req,res)=>{
 
 const forgotPassword = asyncHandler(async (req,res)=>{
 
-    const loggedIn = req.user;
+    const {email} = req.body;
 
-    if(!loggedIn){
-        throw new ApiError(404,"Unauthorized request.");
+    if(!email){
+        throw new ApiError(402,"Please fill any field");
     }
+
+    const isUserExist = await User.findOne({email:email});
+    
 
 });
 
@@ -214,6 +214,10 @@ const resetPassword = asyncHandler(async (req,res)=>{
         throw new ApiError(404,"Unauthorized request.");
     }
 
+
+
 });
+
+
 
 module.exports = { register, login, logout ,updateUser,getUser,getAllUser,forgotPassword,resetPassword};

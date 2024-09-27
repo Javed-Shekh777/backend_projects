@@ -2,7 +2,7 @@ const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
 const asyncHandler = require("../utils/AsyncHandler");
 const { uploadCloudinary, deleteCloudinary } = require("../utils/cloudinary");
-const postFolder = require("../constants");
+const {postFolderName} = require("../constants");
 const Post = require("../models/postModel");
 const User = require("../models/userModel");
 const Comment = require("../models/commentModel");
@@ -42,7 +42,7 @@ const createPost = asyncHandler(async (req, res) => {
         throw new ApiError(409, "All fields are reuired.");
     }
 
-    const cloudinary = await uploadCloudinary(localFilePaths, postFolder);
+    const cloudinary = await uploadCloudinary(localFilePaths, postFolderName);
 
     if (!cloudinary || cloudinary.length === 0) {
         throw new ApiError(409, "Media not uploaded.");
@@ -72,7 +72,7 @@ const createPost = asyncHandler(async (req, res) => {
         throw new ApiError(409, "Post not created.");
     }
 
-    return res.staus(200)
+    return res.status(200)
         .json(
             new ApiResponse(200, savedPost, "Post created successfully.")
         );
@@ -227,14 +227,14 @@ const deletePost = asyncHandler(async (req, res) => {
         throw new ApiError(409, "All fileds are required.");
     }
 
-    const isPostExist = await Post.findById({ _id: postId });
+    const isPostExist = await Post.findByIdAndDelete({ _id: postId });
 
     if (!isPostExist) {
         throw new ApiError(409, "Post not found.");
     }
-
+    // 66f2981cfa2ed68d992dae40
     await User.findByIdAndUpdate({ _id: loggedUser._id }, {
-        $pull: { posts: postId }
+          $pull: { posts: postId }
     }, { new: true });
 
 

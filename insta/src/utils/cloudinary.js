@@ -24,7 +24,7 @@ const uploadCloudinary = async (localFilePaths, folderName) => {
                 folder: folderName,
                 overwrite: true,
             }, (error, result) => {
-                console.log(file, " $$ Result --> ", result);
+               
                 if (error) return Promise.reject(error);
                 fs.unlinkSync(file);
                 return result;
@@ -33,7 +33,7 @@ const uploadCloudinary = async (localFilePaths, folderName) => {
 
         const results = await Promise.all(uploadPromises);
 
-        console.log(" Upload cloudinary : ", results);
+       
 
         return results;
 
@@ -48,15 +48,21 @@ const uploadCloudinary = async (localFilePaths, folderName) => {
 
 
 
-const deleteCloudinary = async (publicIds, resourceType = "") => {
+const deleteCloudinary = async (publicIds, resourceType = "image") => {
     
 
     if(publicIds.length <= 0){
         return null;
     }
     try {
+        console.log("public Id  : ",publicIds);
 
-
+        if(publicIds.length == 1){
+           return cloudinary.uploader.destroy(publicIds[0], {
+                resource_type:resourceType || "image"
+            });
+        }
+ 
 
         const deletePromises = publicIds.map((item)=>{
             return cloudinary.uploader.destroy(item.public_id, {
@@ -73,7 +79,7 @@ const deleteCloudinary = async (publicIds, resourceType = "") => {
         // Log final results, not circular references
         console.log("Delete cloudinary results:", results);
 
-        return results = "";
+        return results ;
 
     } catch (error) {
         console.log(error);

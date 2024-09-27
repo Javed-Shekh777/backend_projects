@@ -23,9 +23,10 @@ const userRegister = asyncHandler(async (req, res) => {
         throw new ApiError(400, "All fields are required");
     }
 
-    const exitingUser = await User.findOne({
+    const exitingUser = await User.findOneAndUpdate({
         $or: [{ username, email }],
-    });
+    }, { $set: { is_verified: false } });
+
 
 
     if (exitingUser) {
@@ -34,6 +35,7 @@ const userRegister = asyncHandler(async (req, res) => {
 
 
     const isExistUserByUsername = await User.findOne({ username });
+
 
 
     if (isExistUserByUsername) {
@@ -100,7 +102,7 @@ const userRegister = asyncHandler(async (req, res) => {
         }
 
 
-        return res.status(201).json(new ApiResponse(200, "User registered successfully. Please verify your account."));
+        return res.status(201).json(new ApiResponse(200,{}, "User registered successfully. Please verify your account."));
     }
 
 });
@@ -201,7 +203,7 @@ const verifyEmail = asyncHandler(async (req, res) => {
 
     if (accountExist.verify_code == code) {
         accountExist.verify_code = "";
-        accountExist.verify_code_expiry = null;
+        accountExist.verify_code_expiry = "";
         accountExist.is_verified = true;
         await accountExist.save();
 
@@ -212,6 +214,7 @@ const verifyEmail = asyncHandler(async (req, res) => {
         throw new ApiError(409, "Verification code is Invalid.");
     }
 });
+
 
 
 
@@ -259,7 +262,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
     },
         process.env.RESET_PASSWORD_TOKEN,
         {
-            expiresIn: new Date(Date.now() + 3600000)
+            expiresIn: "1h"
         }
     )
 
@@ -343,7 +346,7 @@ const userLogout = asyncHandler(async (req, res) => {
 
 
     return res.status(201)
-        .clearCookie("refrreshToken", options)
+        .clearCookie("refreshToken", options)
         .clearCookie("accessToken", options)
         .json(
             new ApiResponse(200, {}, "User logout Successfully.")
@@ -354,7 +357,8 @@ const userLogout = asyncHandler(async (req, res) => {
 
 
 const allUser = asyncHandler(async (req, res) => {
-
+    
+    console.log(req.user);
     const permitted = adminPermission(req.user?.is_admin);
 
     if (!permitted) {
@@ -431,14 +435,15 @@ const currentUser = asyncHandler(async (req, res) => {
 
 const searchUser = asyncHandler(async (req, res) => {
 
-    const search = req.query?.search;
+    console.log(req.query);
+    const search = req.query?.search || "";
 
     const query = {
         $or: [
             {
-                $username: {
+                username: {
                     $regex: search,
-                    // options: "i"
+                    $options: "i"
                 }
             },
         ]
@@ -458,7 +463,11 @@ const searchUser = asyncHandler(async (req, res) => {
 
 const refreshToken = asyncHandler(async (req, res) => {
 
-    const token = req.cookies?.refreshToken || req.body.refreshToken;
+
+    const token =
+        req.cookies?.refreshToken ||
+        req.header("Authorization")?.replace("Bearer ", "") || req.body.refreshToken;
+
 
     if (!token) {
         throw new ApiError(409, "Unauthorized request.");
@@ -468,7 +477,7 @@ const refreshToken = asyncHandler(async (req, res) => {
 
         const decodedToken = JWT.verify(
             token,
-            process.env.REFRESH_TOEKN_SECRET
+            process.env.REFRESH_TOKEN_SECRET
         );
 
         const user = await User.findById(decodedToken?._id).select("-password ");
@@ -487,6 +496,9 @@ const refreshToken = asyncHandler(async (req, res) => {
         }
 
         const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
+        user.access_token = accessToken;
+        user.refresh_token = refreshToken;
+        await user.save();
 
         return res.status(201)
             .cookie("accessToken", accessToken, options)
@@ -513,19 +525,22 @@ const userFollow = asyncHandler(async (req, res) => {
 
     const { following_id } = req.body;
 
-    const follow = await User.findByIdAndUpdate({ _id: loggedUser._id }, {
-        $push: { following: following_id }
-    }, {
-        new: true
-    });
+    const follow = await User.findById({ _id: loggedUser._id });
 
     if (!follow) {
-        throw new ApiError(409, "Not followed.");
+        throw new ApiError(409, "User not exist.");
     }
 
+    if (follow.following.includes(following_id)) {
+        follow.following.pull(following_id);
+    } else {
+        follow.following.push(following_id);
+    }
+
+    await follow.save();
     return res.status(201)
         .json(new
-            ApiResponse(200, follow, "Followed successfully.")
+            ApiResponse(200, follow.following, "Followed successfully.")
         );
 
 });
@@ -550,7 +565,7 @@ const userUnfollow = asyncHandler(async (req, res) => {
 
     return res.status(201)
         .json(new
-            ApiResponse(200, unfollow, "UnFollowed successfully.")
+            ApiResponse(200, unfollow.following, "UnFollowed successfully.")
         );
 
 });
@@ -608,31 +623,33 @@ const profilePicture = asyncHandler(async (req, res) => {
     const file = req.file;
 
 
-    console.log("avatar local path : ", file);
+    
     if (!avatarLocalPath) {
         throw new ApiError(409, "Profile picture is missing.");
     }
 
-    const newAvatar = await uploadCloudinary([avatarLocalPath], avatarFolderName);
+    let newAvatar = await uploadCloudinary([avatarLocalPath], avatarFolderName);
 
     if (!newAvatar) {
         throw new ApiError(409, "Error occured while uploading profile picture.");
     }
 
-    if (req.user?.profile_picture) {
+    if (req.user?.profile_picture && req.user?.profile_picture?.public_id) {
         await deleteCloudinary([req.user?.profile_picture?.public_id], "image");
     }
 
 
+    newAvatar = newAvatar[0];
+    console.log(newAvatar);
     const user = await User.findByIdAndUpdate(
         { _id: loggedUser._id },
         {
             $set: {
                 profile_picture: {
-                    public_id: newAvatar?.public_id,
-                    url: newAvatar?.url
+                    public_id: newAvatar.public_id,
+                    url: newAvatar.secure_url // Use secure_url from Cloudinary
                 }
-            },
+            }
         },
         {
             new: true

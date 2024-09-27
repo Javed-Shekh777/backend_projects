@@ -21,7 +21,7 @@ function emailVerificationHTML(email, verificationCode) {
                                     <tbody>
                                         <tr>
                                             <td style="width:100%;text-align:left;height:33px"><img height="33"
-                                                    src="https://ci3.googleusercontent.com/meips/ADKq_NZOuwWow1hequUmkYlojOB8b7wBf6eSVAJaMxSRSRbOK-m43XIVYFgsxdp06-1V6TG1kn-vCSX0fIByOKeu2ekAw5B_GWA6pO79NqE0KGuXp7w=s0-d-e1-ft#https://static.xx.fbcdn.net/rsrc.php/v3/yO/r/Otjcwa2eCOF.png"
+                                                    src="http://ci3.googleusercontent.com/meips/ADKq_NZOuwWow1hequUmkYlojOB8b7wBf6eSVAJaMxSRSRbOK-m43XIVYFgsxdp06-1V6TG1kn-vCSX0fIByOKeu2ekAw5B_GWA6pO79NqE0KGuXp7w=s0-d-e1-ft#http://static.xx.fbcdn.net/rsrc.php/v3/yO/r/Otjcwa2eCOF.png"
                                                     style="border:0" class="CToWUd" data-bit="iit"></td>
                                         </tr>
                                     </tbody>
@@ -100,7 +100,7 @@ function emailVerificationHTML(email, verificationCode) {
                             <td style="text-align:center">
                                 <div style="padding-top:10px;display:flex">
                                     <div style="margin:auto"><img
-                                            src="https://ci3.googleusercontent.com/meips/ADKq_NZ2ivJHkv1KH9YS4Yecj8l99ueLszgAkXVAp0N50dD4Ymu0h1h6mxYcBJPC_sK-e9dLWuH1g-vgF844MKpudUUCekQ6pdY1QLsHcrt36zAkxpk=s0-d-e1-ft#https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/Bqo9-L659wB.png"
+                                            src="http://ci3.googleusercontent.com/meips/ADKq_NZ2ivJHkv1KH9YS4Yecj8l99ueLszgAkXVAp0N50dD4Ymu0h1h6mxYcBJPC_sK-e9dLWuH1g-vgF844MKpudUUCekQ6pdY1QLsHcrt36zAkxpk=s0-d-e1-ft#http://static.xx.fbcdn.net/rsrc.php/v3/y3/r/Bqo9-L659wB.png"
                                             height="26" width="52" alt="" class="CToWUd" data-bit="iit"></div><br>
                                 </div>
                                 <div style="height:10px"></div>
@@ -154,7 +154,7 @@ const forgotPasswordHtml = (username, token) => {
     <tbody>
     <tr>
     <td style="width:100%;text-align:left;height:33px">
-    <img height="33" src="https://ci3.googleusercontent.com/meips/ADKq_NZOuwWow1hequUmkYlojOB8b7wBf6eSVAJaMxSRSRbOK-m43XIVYFgsxdp06-1V6TG1kn-vCSX0fIByOKeu2ekAw5B_GWA6pO79NqE0KGuXp7w=s0-d-e1-ft#https://static.xx.fbcdn.net/rsrc.php/v3/yO/r/Otjcwa2eCOF.png" style="border:0" class="CToWUd" data-bit="iit">
+    <img height="33" src="http://ci3.googleusercontent.com/meips/ADKq_NZOuwWow1hequUmkYlojOB8b7wBf6eSVAJaMxSRSRbOK-m43XIVYFgsxdp06-1V6TG1kn-vCSX0fIByOKeu2ekAw5B_GWA6pO79NqE0KGuXp7w=s0-d-e1-ft#http://static.xx.fbcdn.net/rsrc.php/v3/yO/r/Otjcwa2eCOF.png" style="border:0" class="CToWUd" data-bit="iit">
     </td>
     </tr>
     </tbody>
@@ -187,12 +187,12 @@ const forgotPasswordHtml = (username, token) => {
     <tr>
     <td height="20" style="line-height:20px">&nbsp;</td></tr><tr><td width="20" style="display:block;width:20px">&nbsp;&nbsp;&nbsp;</td>
     <td>
-    <a href="http://${process.env.FRONTEND}/web_emaillogin?token=${token}&amp;auto_send=0" style="color:#1b74e4;text-decoration:none;display:block;width:370px" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://${process.env.FRONTEND}/web_emaillogin?token%3DCmVTO4%26auto_send%3D0&amp;source=gmail&amp;ust=1725001664732000&amp;usg=AOvVaw3ZdpLomNr7ZNO8MlixnD1r">
+    <a href="http://${process.env.FRONTEND}/?token=${token}&amp;auto_send=0" style="color:#1b74e4;text-decoration:none;display:block;width:370px" target="_blank" data-saferedirecturl="http://www.google.com/url?q=http://${process.env.FRONTEND}/?token%3DCmVTO4%26auto_send%3D0&amp;source=gmail&amp;ust=1725001664732000&amp;usg=AOvVaw3ZdpLomNr7ZNO8MlixnD1r">
     <table border="0" width="390" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
     <tbody>
     <tr>
     <td style="border-collapse:collapse;border-radius:3px;text-align:center;display:block;border:solid 1px #009fdf;padding:10px 16px 14px 16px;margin:0 2px 0 auto;min-width:80px;background-color:#47a2ea">
-    <a href="https://${process.env.FRONTEND}/web_emaillogin?token=${token};auto_send=0" style="color:#1b74e4;text-decoration:none;display:block" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://${process.env.FRONTEND}/web_emaillogin?token%3DCmVTO4%26auto_send%3D0&amp;source=gmail&amp;ust=1725001664732000&amp;usg=AOvVaw3ZdpLomNr7ZNO8MlixnD1r">
+    <a href="http://${process.env.FRONTEND}/?token=${token};auto_send=0" style="color:#1b74e4;text-decoration:none;display:block" target="_blank" data-saferedirecturl="http://www.google.com/url?q=http://${process.env.FRONTEND}/?token%3DCmVTO4%26auto_send%3D0&amp;source=gmail&amp;ust=1725001664732000&amp;usg=AOvVaw3ZdpLomNr7ZNO8MlixnD1r">
     <center>
     <font size="3"><span style="font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#fdfdfd;font-size:16px;line-height:16px">
     Log&nbsp;in&nbsp;as&nbsp;${username}
@@ -228,12 +228,12 @@ const forgotPasswordHtml = (username, token) => {
     </tr>
     <tr>
     <td>
-    <a href="https://${process.env.FRONTEND}/accounts/password/reset/confirm/?token=${token}:one_click_login_email&amp;s=one_click_login_email&amp;is_caa=0&amp;afv=LEGACY_FLOW" style="color:#1b74e4;text-decoration:none;display:block;width:370px" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://${process.env.FRONTEND}/accounts/password/reset/confirm/?token=${token}:one_click_login_email%26s%3Done_click_login_email%26is_caa%3D0%26afv%3DLEGACY_FLOW&amp;source=gmail&amp;ust=1725001664732000&amp;usg=AOvVaw3trF8DJSwQWCmLK7NQomPM">
+    <a href="http://${process.env.FRONTEND}/accounts/password/reset/confirm/?token=${token}:one_click_login_email&amp;s=one_click_login_email&amp;is_caa=0&amp;afv=LEGACY_FLOW" style="color:#1b74e4;text-decoration:none;display:block;width:370px" target="_blank" data-saferedirecturl="http://www.google.com/url?q=http://${process.env.FRONTEND}/accounts/password/reset/confirm/?token=${token}:one_click_login_email%26s%3Done_click_login_email%26is_caa%3D0%26afv%3DLEGACY_FLOW&amp;source=gmail&amp;ust=1725001664732000&amp;usg=AOvVaw3trF8DJSwQWCmLK7NQomPM">
     <table border="0" width="390" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
     <tbody>
     <tr>
     <td style="border-collapse:collapse;border-radius:3px;text-align:center;display:block;border:solid 1px #009fdf;padding:10px 16px 14px 16px;margin:0 2px 0 auto;min-width:80px;background-color:#47a2ea">
-    <a href="https://${process.env.FRONTEND}/accounts/password/reset/confirm/?token=${token}:one_click_login_email&amp;s=one_click_login_email&amp;is_caa=0&amp;afv=LEGACY_FLOW" style="color:#1b74e4;text-decoration:none;display:block" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://instagram.com/accounts/password/reset/confirm/?uidb36%3Dopmqz6b%26token%3D10OxpkIQmKKJTc50Nmv86k4Bd5mqLHuFJadOdhCjUqWFOhM32BWb1DJebXxT8uCd:one_click_login_email%26s%3Done_click_login_email%26is_caa%3D0%26afv%3DLEGACY_FLOW&amp;source=gmail&amp;ust=1725001664732000&amp;usg=AOvVaw3trF8DJSwQWCmLK7NQomPM">
+    <a href="http://${process.env.FRONTEND}/accounts/password/reset/confirm/?token=${token}:one_click_login_email&amp;s=one_click_login_email&amp;is_caa=0&amp;afv=LEGACY_FLOW" style="color:#1b74e4;text-decoration:none;display:block" target="_blank" data-saferedirecturl="http://www.google.com/url?q=http://instagram.com/accounts/password/reset/confirm/?uidb36%3Dopmqz6b%26token%3D10OxpkIQmKKJTc50Nmv86k4Bd5mqLHuFJadOdhCjUqWFOhM32BWb1DJebXxT8uCd:one_click_login_email%26s%3Done_click_login_email%26is_caa%3D0%26afv%3DLEGACY_FLOW&amp;source=gmail&amp;ust=1725001664732000&amp;usg=AOvVaw3trF8DJSwQWCmLK7NQomPM">
     <center>
     <font size="3">
     <span style="font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#fdfdfd;font-size:16px;line-height:16px">Reset&nbsp;your&nbsp;password</span>
@@ -258,7 +258,7 @@ const forgotPasswordHtml = (username, token) => {
     <tr>
     <td>
     <div>
-    <div style="padding:0;margin:10px 0 10px 0;color:#565a5c;font-size:16px">If you didn’t request a login link or a password reset, you can ignore this message and <a href="https://help.instagram.com/231141655544451" style="color:#1b74e4;text-decoration:none" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://help.instagram.com/231141655544451&amp;source=gmail&amp;ust=1725001664732000&amp;usg=AOvVaw1daJ6j1S9kK6pRhNfZPl6l">learn more about why you may have received it</a>. 
+    <div style="padding:0;margin:10px 0 10px 0;color:#565a5c;font-size:16px">If you didn’t request a login link or a password reset, you can ignore this message and <a href="http://help.instagram.com/231141655544451" style="color:#1b74e4;text-decoration:none" target="_blank" data-saferedirecturl="http://www.google.com/url?q=http://help.instagram.com/231141655544451&amp;source=gmail&amp;ust=1725001664732000&amp;usg=AOvVaw1daJ6j1S9kK6pRhNfZPl6l">learn more about why you may have received it</a>. 
     <span>
     </span>
     <br>
@@ -293,7 +293,7 @@ const forgotPasswordHtml = (username, token) => {
     <tbody>
     <tr>
     <td height="4" style="line-height:4px" colspan="3">&nbsp;</td></tr><tr><td width="15px" style="width:15px"></td><td width="20" style="display:block;width:20px">&nbsp;&nbsp;&nbsp;</td><td style="text-align:center">
-    <div style="padding-top:10px;display:flex"><div style="margin:auto"><img src="https://ci3.googleusercontent.com/meips/ADKq_NZ2ivJHkv1KH9YS4Yecj8l99ueLszgAkXVAp0N50dD4Ymu0h1h6mxYcBJPC_sK-e9dLWuH1g-vgF844MKpudUUCekQ6pdY1QLsHcrt36zAkxpk=s0-d-e1-ft#https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/Bqo9-L659wB.png" height="26" width="52" alt="" class="CToWUd" data-bit="iit">
+    <div style="padding-top:10px;display:flex"><div style="margin:auto"><img src="http://ci3.googleusercontent.com/meips/ADKq_NZ2ivJHkv1KH9YS4Yecj8l99ueLszgAkXVAp0N50dD4Ymu0h1h6mxYcBJPC_sK-e9dLWuH1g-vgF844MKpudUUCekQ6pdY1QLsHcrt36zAkxpk=s0-d-e1-ft#http://static.xx.fbcdn.net/rsrc.php/v3/y3/r/Bqo9-L659wB.png" height="26" width="52" alt="" class="CToWUd" data-bit="iit">
     </div>
     <br>
     </div>
@@ -302,7 +302,7 @@ const forgotPasswordHtml = (username, token) => {
     <div style="color:#abadae;font-size:11px;margin:0 auto 5px auto">This message was sent to 
     <a style="color:#abadae;text-decoration:underline">mdjavedshekh12@gmail.com</a>
      and intended for javedshekh6943. Not your account?
-      <a href="https://instagram.com/accounts/remove/revoke_wrong_email/?uidb36=opmqz6b&amp;token=6o0-b01e10986ab934702854f40ec3ac17f5&amp;nonce=CB1kaWiI&amp;encoded_email=bWRqYXZlZHNoZWtoMTJAZ21haWwuY29t" style="color:#abadae;text-decoration:underline" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://instagram.com/accounts/remove/revoke_wrong_email/?uidb36%3Dopmqz6b%26token%3D6o0-b01e10986ab934702854f40ec3ac17f5%26nonce%3DCB1kaWiI%26encoded_email%3DbWRqYXZlZHNoZWtoMTJAZ21haWwuY29t&amp;source=gmail&amp;ust=1725001664732000&amp;usg=AOvVaw2xAMFGxL8-5jb17fJxfu9C">Remove your email</a> from this account.<br>
+      <a href="http://${process.env.FRONTEND}/accounts/remove/revoke_wrong_email/?token=${token}&amp;nonce=CB1kaWiI&amp;encoded_email=bWRqYXZlZHNoZWtoMTJAZ21haWwuY29t" style="color:#abadae;text-decoration:underline" target="_blank" data-saferedirecturl="http://www.google.com/url?q=http://instagram.com/accounts/remove/revoke_wrong_email/?uidb36%3Dopmqz6b%26token%3D6o0-b01e10986ab934702854f40ec3ac17f5%26nonce%3DCB1kaWiI%26encoded_email%3DbWRqYXZlZHNoZWtoMTJAZ21haWwuY29t&amp;source=gmail&amp;ust=1725001664732000&amp;usg=AOvVaw2xAMFGxL8-5jb17fJxfu9C">Remove your email</a> from this account.<br>
       </div>
       </td>
       <td width="20" style="display:block;width:20px">&nbsp;&nbsp;&nbsp;</td><td width="15px" style="width:15px">
@@ -313,16 +313,6 @@ const forgotPasswordHtml = (username, token) => {
       </tr>
       </tbody>
       </table>
-
-
-
-
-
-
-
-
-
-
       </td>
       </tr>
       <tr>
@@ -330,7 +320,7 @@ const forgotPasswordHtml = (username, token) => {
       </tr>
       </tbody>
       </table>
-      <span><img src="https://ci3.googleusercontent.com/meips/ADKq_NYk-b6xQhqFCsnGWyZkIIoZoDl0Vb7UCV_TOGw8fuR9PjKyLkqX09L0e8T73jbGVUM6DeyK__kQppdROs_d5RHE-V4h7AXKDaudMCbnbx99VcGHdX0T2WgQR0VlUQtXFDT1ZmGtA-qAxzH9ozO5masSdunJjYzNTQ=s0-d-e1-ft#https://www.facebook.com/email_open_log_pic.php?mid=620b9adc47080G24bc396144ce93G620b9f75a7353G3df" style="border:0;width:1px;height:1px" class="CToWUd" data-bit="iit">
+      <span><img src="http://ci3.googleusercontent.com/meips/ADKq_NYk-b6xQhqFCsnGWyZkIIoZoDl0Vb7UCV_TOGw8fuR9PjKyLkqX09L0e8T73jbGVUM6DeyK__kQppdROs_d5RHE-V4h7AXKDaudMCbnbx99VcGHdX0T2WgQR0VlUQtXFDT1ZmGtA-qAxzH9ozO5masSdunJjYzNTQ=s0-d-e1-ft#http://www.facebook.com/email_open_log_pic.php?mid=620b9adc47080G24bc396144ce93G620b9f75a7353G3df" style="border:0;width:1px;height:1px" class="CToWUd" data-bit="iit">
       </span>
       </td>
       </tr>

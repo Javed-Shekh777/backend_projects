@@ -13,9 +13,6 @@ const sendEmail = async (email, subject, htmlContent) => {
             },
         });
 
-        console.log("Email : ",process.env.AUTH_EMAIL);
-        console.log("Pass: ",process.env.AUTH_KEY);
-
         let mailOptions = {
             from: 'mdjavedshekh777@gmail.com>', // Sender address
             to: email, // Receiver's email
@@ -23,17 +20,14 @@ const sendEmail = async (email, subject, htmlContent) => {
             html: htmlContent, // HTML body content
         };
 
-
-
-
-        console.log("Transporter : ", transporter.options);
+       
 
         const mailResponse = await transporter.sendMail(mailOptions);
-        console.log(" Email response : ", mailResponse);
+         
         return mailResponse;
 
     } catch (error) {
-        console.log(error);
+        
         throw new Error(error.message);
     }
 }
