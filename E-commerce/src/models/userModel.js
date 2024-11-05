@@ -1,23 +1,27 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const JWT = require("jsonwbtoken");
+const JWT = require("jsonwebtoken");
 
 
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
         trim: true,
-        min: 3,
+        minlength: [3,"Username must be greater than 3 characters"],
         required: [true, "Username is required."]
     },
     email: {
         type: String,
         trim: true,
         required: [true, "Email is required."],
-        unique: [true, "Email should be unique."]
+        unique: [true, "Email already exist."],
+        match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Invalid email address.']
     },
     password: {
         type: String,
+        trim:true,
+        minlength: [6,"Password must be  6 or 16 characters"],
+        maxlength: [16,"Password must be 6 or 16 characters"],
         required: [true, "Password is required."],
     },
     address: {
@@ -29,6 +33,8 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
+        minlength: [10,"Phone number must be 10 or 12 characters"],
+        maxlength: [13,"Phone number must be 10 or 12 characters"]
     },
     order_history: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -50,7 +56,8 @@ const userSchema = new mongoose.Schema({
         type: String,
     },
     verify_code_expiry: {
-        type: Date
+        type: Date,
+        default : Date.now()
     }
 },
     { timestamps: true }
@@ -58,18 +65,17 @@ const userSchema = new mongoose.Schema({
 
 
 userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) {
+    if (!(this.isModified("password"))) {
         return next();
     }
     this.password = await bcrypt.hash(this.password, 10);
     next();
 });
 
-
 userSchema.methods.isPasswordCorrect = async function (password) {
-
-    return await bcrypt.compare(password, this.password);
-}
+    const correct = await bcrypt.compare(password, this.password);
+    return correct;
+};
 
 userSchema.methods.generateToken =  function () {
 
@@ -87,4 +93,6 @@ userSchema.methods.generateToken =  function () {
     );
 
 }
-module.exports = mongoose.model("user", userSchema);
+const userModel = mongoose.model("user", userSchema);
+
+module.exports = userModel;

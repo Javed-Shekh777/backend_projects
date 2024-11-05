@@ -6,11 +6,12 @@ const activitySchema = new mongoose.Schema({
         ref: "user",
     },
     activity_type: {
-        type: String
+        type: String,
+        default:""
     },
-    activity_details: { type: String },
-    is_address: { type: String },
-    device_id: { type: String }
+    activity_details: { type: String,default:"" },
+    ip_address: { type: String,default:"" },
+    device_id: { type: String ,default:""}
 }, { timestamps: true });
 
 

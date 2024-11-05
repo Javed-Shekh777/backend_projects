@@ -6,13 +6,17 @@ const JWT = require("jsonwebtoken");
 const authenticated = asyncHandler(async (req, res, next) => {
     try {
 
-        const token = req.cookie.token || req.header['Authorization'].replace("Bearer ", "");
+        const token =
+       req.cookies?.token ||
+       req.header("Authorization")?.replace("Bearer ", "");
+
+       
 
         if (!token) {
             throw new ApiError(404, "Unauthorized access.");
         }
 
-        const decoded = await JWT.verify(token.process.env.SECRET_TOKEN);
+        const decoded = await JWT.verify(token,process.env.SECRET_TOKEN);
 
         if (!decoded) {
             throw new ApiError(404, "Invalid access token.");

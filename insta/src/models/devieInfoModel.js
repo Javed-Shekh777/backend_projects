@@ -8,15 +8,19 @@ const deviceInfoSchema = new mongoose.Schema({
     },
     device_type: {
         type: String,
+        default:""
     },
     device_id: {
-        type: String
+        type: String,
+        default:""
     },
     login_time: {
-        type: Date
+        type: Date,
+        default:Date.now
     },
     logout_time: {
-        type: Date
+        type: Date,
+        default:Date.now
     },
     last_active: { type: Date },
     location: { type: String },

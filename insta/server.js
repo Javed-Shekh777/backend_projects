@@ -1,29 +1,83 @@
-const dotenv = require("dotenv");
-// dotenv configuration 
-dotenv.config();
+// const dotenv = require("dotenv").config();
+// // // dotenv configuration 
 
-const app = require("./src/app.js");
-const connectDB = require("./src/config/db.js");
-
-
-// Port 
-const port = process.env.PORT || 3000;
+// const server = require("./src/app.js");
+// const connectDB = require("./src/config/db.js");
 
 
-// Databse calling and server starting 
-
-connectDB()
-    .then(() => {
-        app.listen(port, () => {
-            console.log(`Server is Running on PORT : http://localhost:${port}`);
-        });
-    }).catch((error) => console.log("MongoDB connection failed ", error));
+// // Port 
+// const port = process.env.PORT || 8080;
 
 
+// // Databse calling and server starting 
+
+// connectDB()
+//     .then(() => {
+//         server.listen(port, () => {
+//             console.log(`Server is Running on PORT : http://localhost:${port}`);
+//         });
+//     }).catch((error) => console.log("MongoDB connection failed ", error));
+
+
+
+
+
+// ==============================================================================================
+
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+    });
+});
+
+server.listen(3000, () => {
+  console.log('listening on *:3000');
+});
 
 
  
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ChatGPT said:
 // ChatGPT
@@ -42,7 +96,7 @@ connectDB()
 //   "bio": "Exploring the world through my lens!",
 //   "website": "https://firstuserblog.com",
 //   "profilePicture": "https://example.com/profile1.jpg",
-//   "followers": [ObjectId("64f223456789abc123456781")], 
+//   "followers": [ObjectId("64f223456789abc123456781")],
 //   "following": [ObjectId("64f223456789abc123456781")],
 //   "posts": [ObjectId("64f623456789abc123456780"), ObjectId("64f623456789abc123456781")],
 //   "stories": [ObjectId("64f823456789abc123456780")],
@@ -63,13 +117,13 @@ connectDB()
 //   ],
 //   "usageData": {
 //     "totalPosts": 2,
-//     "totalLikes": 16, 
-//     "totalComments": 8, 
+//     "totalLikes": 16,
+//     "totalComments": 8,
 //     "totalStories": 1,
 //     "totalReels": 3,
 //     "totalFollowers": 1,
 //     "totalFollowing": 1,
-//     "averageTimeSpent": 40 
+//     "averageTimeSpent": 40
 //   },
 //   "settings": {
 //     "notifications": {
@@ -152,7 +206,7 @@ connectDB()
 //     "media": [
 //       {
 //         "url": "https://example.com/reel1.mp4",
-//         "duration": 30 
+//         "duration": 30
 //       }
 //     ],
 //     "likes": [ObjectId("64f223456789abc123456781"), ObjectId("64f323456789abc123456783")],
@@ -167,7 +221,7 @@ connectDB()
 //     "media": [
 //       {
 //         "url": "https://example.com/reel2.mp4",
-//         "duration": 45 
+//         "duration": 45
 //       }
 //     ],
 //     "likes": [ObjectId("64f223456789abc123456781"), ObjectId("64f323456789abc123456784")],
@@ -182,7 +236,7 @@ connectDB()
 //     "media": [
 //       {
 //         "url": "https://example.com/reel3.mp4",
-//         "duration": 60 
+//         "duration": 60
 //       }
 //     ],
 //     "likes": [ObjectId("64f223456789abc123456781"), ObjectId("64f323456789abc123456785")],
@@ -259,7 +313,7 @@ connectDB()
 //   "bio": "Nature lover and traveler.",
 //   "website": "https://secondusertravel.com",
 //   "profilePicture": "https://example.com/profile2.jpg",
-//   "followers": [ObjectId("64f123456789abc123456780")], 
+//   "followers": [ObjectId("64f123456789abc123456780")],
 //   "following": [ObjectId("64f123456789abc123456780")],
 //   "posts": [ObjectId("64f623456789abc123456782"), ObjectId("64f623456789abc123456783"), ObjectId("64f623456789abc123456784")],
 //   "stories": [ObjectId("64f823456789abc123456781")],
@@ -280,13 +334,13 @@ connectDB()
 //   ],
 //   "usageData": {
 //     "totalPosts": 3,
-//     "totalLikes": 14, 
-//     "totalComments": 8, 
+//     "totalLikes": 14,
+//     "totalComments": 8,
 //     "totalStories": 1,
 //     "totalReels": 2,
 //     "totalFollowers": 1,
 //     "totalFollowing": 1,
-//     "averageTimeSpent": 35 
+//     "averageTimeSpent": 35
 //   },
 //   "settings": {
 //     "notifications": {
@@ -393,7 +447,7 @@ connectDB()
 //     "media": [
 //       {
 //         "url": "https://example.com/reel4.mp4",
-//         "duration": 20 
+//         "duration": 20
 //       }
 //     ],
 //     "likes": [ObjectId("64f123456789abc123456780"), ObjectId("64f323456789abc123456784")],
@@ -411,7 +465,7 @@ connectDB()
 //     "media": [
 //       {
 //         "url": "https://example.com/reel5.mp4",
-//         "duration": 18 
+//         "duration": 18
 //       }
 //     ],
 //     "likes": [ObjectId("64f123456789abc123456780"), ObjectId("64f323456789abc123456781")],

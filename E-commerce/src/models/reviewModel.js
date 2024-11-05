@@ -17,8 +17,11 @@ const reviewSchema = new mongoose.Schema({
     },
     comment: {
         type: String
+    },
+    likes: {
+        type: Number,
+        default: 0
     }
-
 
 },
     { timestamps: true }

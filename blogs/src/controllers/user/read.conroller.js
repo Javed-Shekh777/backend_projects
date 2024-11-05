@@ -2,7 +2,7 @@ const errorHandler = require("../../helper/errorHandler");
 const responseHandler = require("../../helper/responseHandler");
 const User = require("../../models/user.model");
 
-const readUser = async (req, res) => {
+const currentUser = async (req, res) => {
 
     try {
 
@@ -28,4 +28,4 @@ const readUser = async (req, res) => {
 }
 
 
-module.exports = readUser;
+module.exports = currentUser;

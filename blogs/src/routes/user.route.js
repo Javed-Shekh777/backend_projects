@@ -4,8 +4,8 @@ const logout = require("../controllers/user/logout.controller");
 const loggedUser = require("../middleware/auth.middleware");
 const update = require("../controllers/user/update.controller");
 const deleteUser = require("../controllers/user/delete.controller");
-const readUser = require("../controllers/user/read.conroller");
 const readAllUser = require("../controllers/user/readall.controller");
+const currentUser = require("../controllers/user/read.conroller");
 
 
 const router = require("express").Router();
@@ -16,8 +16,8 @@ router.route("/login").post(login);
 router.route("/logout").post(loggedUser,logout);
 router.route("/update").post(loggedUser,update);
 router.route("/delete").post(loggedUser,deleteUser);
-router.route("/read").post(loggedUser,readUser);
-router.route("/readall").post(readAllUser);
+router.route("/current-user").get(loggedUser,currentUser);
+router.route("/read-all").get(readAllUser);
 
 
  

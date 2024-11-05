@@ -1,18 +1,18 @@
-const { register, login, logout } = require("../controllers/userController");
-const auth = require("");
-const auth = require("../middlewares/authMiddleware");
+const { register, login, logout, forgetPassword, resetPassword, currentUser } = require("../controllers/userController");
+const {isAuthenticated}= require("../middlewares/authMiddleware");
 const router = require("express").Router();
 
 
+
+// Unsecured routes of user
 router.route("/register").post(register);
 router.route("/login").post(login);
-router.route("/logout").post(auth,logout);
-router.route("/forgot-password").post();
-router.route("/reset-password").post();
-router.route("/update").post();
-router.route("/get-user").post();
-router.route("/delete-user").post();
-router.route("/get-all-user").post();
+router.route("/forgot-password").post(forgetPassword);
+router.route("/reset-password").post(resetPassword);
+
+//Secure routes of User
+router.route("/logout").post(isAuthenticated,logout);
+router.route("/current-user").get(isAuthenticated,currentUser);
 
 
 module.exports = router;

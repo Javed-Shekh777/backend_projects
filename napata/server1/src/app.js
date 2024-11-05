@@ -3,6 +3,12 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const userRoute = require("./routes/userRoute");
+const adminRoute = require("./routes/userRoute");
+const voterRoute = require("./routes/voterRoute");
+
+
+
+
 
 app.use(cors({
     credentials:true,
@@ -19,6 +25,8 @@ app.use(express.static("public"));
 
 
 app.use("/api/v1/user",userRoute);
+app.use("/api/v1/admin",adminRoute);
+app.use("/api/v1/voter",voterRoute);
 
 
 

@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
 
 const notificationSchema = new mongoose.Schema({
-    user_id: [{
+    user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user",
         required: true
-    }],
+    },
     type: { type: String, required: true },
     message: {
-        type: String
+        type: String,
+        default:""
     },
     related_id: {
         type: mongoose.Schema.Types.ObjectId,

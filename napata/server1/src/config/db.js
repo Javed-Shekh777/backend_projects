@@ -2,8 +2,10 @@ const mongoose = require("mongoose");
 
 const connection =async ()=>{
     try {
+      
 
-        const conn = await mongoose.connect(process.env.MONGODB_URI);
+        const conn =  await mongoose.connect(process.env.MONGODB_URI);
+
         if(conn){
             console.log(`Database connected.. Host is ${conn.connection.host}`);
         }
@@ -16,3 +18,4 @@ const connection =async ()=>{
 
 
 module.exports = connection;
+ 

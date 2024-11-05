@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
-    name: {
+    title: {
         type: String,
         trim: true,
         required: [true, "Product name is required."]
@@ -17,6 +17,9 @@ const productSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "category"
     },
+    brand:{
+        type:String
+    },
     stock: {
         type: Number
     },
@@ -28,10 +31,6 @@ const productSchema = new mongoose.Schema({
             type: String
         }
     }],
-    attributes: {
-        size: { type: Number },
-        color: { type: String }
-    },
     reviews: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "review"

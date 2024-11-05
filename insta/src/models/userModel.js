@@ -93,42 +93,32 @@ const userSchema = new mongoose.Schema({
     }],
     date_joined: {
         type: Date,
+        default:Date.now
     },
     last_login: {
-        type: Date
+        type: Date,
+        default:Date.now
     },
-    // device_info: [{
-    //     device_type: { type: String,default:"" },
-    //     device_id: { type: String,default:"" },
-    //     login_time: { type: Date,default:"" }
-    // }],
+    device_info: [{
+        device_type: { type: String,default:"" },
+        device_id: { type: String,default:"" },
+        login_time: { type: Date,default:"" },
+        ip:{type:String,default:""}
+    }],
 
     usage_data: {
-        total_likes: { type: Number },
-        total_posts: { type: Number },
-        total_comments: { type: Number },
-        total_stories: { type: Number },
-        total_reels: { type: Number },
-        total_followers: { type: Number },
-        total_following: { type: Number },
-        average_time_spent: { type: Number }
+        total_likes: { type: Number ,default:0},
+        total_posts: { type: Number ,default:0},
+        total_comments: { type: Number,default:0 },
+        total_stories: { type: Number,default:0 },
+        total_reels: { type: Number,default:0 },
+        total_followers: { type: Number,default:0 },
+        total_following: { type: Number ,default:0},
+        average_time_spent: { type: Number,default:0 }
     },
     setting: {
-        notification: {
-            likes: { type: Boolean, default: true },
-            comments: { type: Boolean, default: true },
-            newFollowers: { type: Boolean, default: true },
-            directMessages: { type: Boolean, default: true },
-            mentions: { type: Boolean, default: true }
-        },
-
-        privacy: {
-            account_privacy: { type: String },
-            activity_status: { type: Boolean, default: true },
-            story_sharing: { type: Boolean, default: true },
-            message_replies: { type: String },
-            tagging: { type: String },
-        }
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"setting"
     },
     is_admin: {
         type: Boolean,
@@ -136,6 +126,7 @@ const userSchema = new mongoose.Schema({
     },
     verify_code: {
         type: String,
+        default:""
     },
     verify_code_expiry: {
         type: Date,
@@ -143,9 +134,11 @@ const userSchema = new mongoose.Schema({
     },
     refresh_token: {
         type: String,
+        default:""
     },
     access_token: {
         type: String,
+        default:""
     },
 },
     {

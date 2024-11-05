@@ -1,25 +1,24 @@
-const { register, login, logout, updateUser, getUser, getAllUser,forgotPassword,resetPassword } = require("../controllers/userController");
+const { register, login, logout, updateUser, currentUser, getAllUser, forgetPassword, resetPassword, deleteAccount } = require("../controllers/userController");
 const authenticated = require("../middlewares/authMiddleware");
-
 const router = require("express").Router();
 
 
-
+// Simple user routes 
 router.route("/register").post(register);
 router.route("/login").post(login);
-router.route("/forgot-password").get( forgotPassword);
-router.route("/reset-password").get( resetPassword);
+router.route("/forget-password").post(forgetPassword);
+router.route("/reset-password").post(resetPassword);
 
 
-// secure routes
+// Secure  User routes
 router.route("/logout").post(authenticated, logout);
 router.route("/update-user").post(authenticated, updateUser);
-router.route("/get-user").get(authenticated, getUser);
+router.route("/current-user").get(authenticated, currentUser);
 router.route("/get-all-user").get(authenticated, getAllUser);
 
 
 
-// router.route("/delete-user").post();
+router.route("/delete-user").post(authenticated, deleteAccount);
 
 
 

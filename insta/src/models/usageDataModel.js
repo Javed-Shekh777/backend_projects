@@ -8,28 +8,28 @@ const usageSchema = new mongoose.Schema({
         required: true,
     },
     daily_usage: [{
-        date: { type: Date },
-        time_spent: { type: Number },
+        date: { type: Date,default:Date.now },
+        time_spent: { type: String , default:"" },
         actions: {
-            posts: { type: Number },
-            likes: { type: Number },
-            comments: { type: Number },
-            messages: { type: Number }
+            posts: { type: Number ,default:0},
+            likes: { type: Number ,default:0},
+            comments: { type: Number,default:0 },
+            messages: { type: Number ,default:0}
         }
     }],
     weekly_summary: {
-        posts: { type: Number },
-        likes: { type: Number },
-        comments: { type: Number },
-        messages: { type: Number },
-        time_spent: { type: Number }
+        posts: { type: Number ,default:0},
+        likes: {  type: Number ,default:0 },
+        comments: { type: Number ,default:0 },
+        messages: {  type: Number ,default:0 },
+        time_spent: { type: Number ,default:0 }
     },
     monthly_summary: {
-        posts: { type: Number },
-        likes: { type: Number },
-        comments: { type: Number },
-        messages: { type: Number },
-        time_spent: { type: Number }
+        posts: {  type: Number ,default:0 },
+        likes: {  type: Number ,default:0 },
+        comments: {  type: Number ,default:0},
+        messages: {  type: Number ,default:0 },
+        time_spent: {  type: Number ,default:0 }
     },
 }, { timestamps: true });
 

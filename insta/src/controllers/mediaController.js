@@ -88,13 +88,15 @@ const readPost = asyncHandler(async (req, res) => {
         throw new ApiError(409, "Unauthprized request.");
     }
 
-    const { postId } = req.body;
+    const { id } = req.params;
+    
 
-    if (!postId) {
+
+    if (!id) {
         throw new ApiError(409, "Post id not found.");
     }
 
-    const post = await Post.findById({ _id: postId }).populate("user_id,username profile_picture").populate("comments");
+    const post = await Post.findById({ _id: id }).populate('user_id', 'username profile_picture').populate("comments");
 
     if (!post) {
         throw new ApiError(409, "Post not found.");
@@ -118,7 +120,7 @@ const readAllPost = asyncHandler(async (req, res) => {
         throw new ApiError(409, "Unauthprized request.");
     }
 
-    const posts = await Post.find().populate("user_id , username profile_picture").populate("comments");
+    const posts = await Post.find().populate('user_id', 'username profile_picture').populate("comments");
 
     if (!posts) {
         throw new ApiError(409, "Posts not found.");
@@ -126,7 +128,7 @@ const readAllPost = asyncHandler(async (req, res) => {
 
     return res.status(201)
         .json(
-            new ApiResponse(200, posts, "Post found successfully.")
+            new ApiResponse(200, posts, "Posts found successfully.")
         );
 
 });
@@ -150,9 +152,9 @@ const updatePost = asyncHandler(async (req, res) => {
     const files = req.files;
     const file = req.file;
 
-    if (!files || files.length === 0 && (!file)) {
-        throw new ApiError(409, "Media file is missing."); // Validate if media files are provided
-    }
+    // if (!files || files.length === 0 && (!file)) {
+    //     throw new ApiError(409, "Media file is missing."); // Validate if media files are provided
+    // }
 
     let localFilePaths = [];
 
@@ -179,17 +181,29 @@ const updatePost = asyncHandler(async (req, res) => {
                 }
             )
         );
+    }
 
+    let cloudinary ;
+    if(localFilePaths.length > 0){
+        cloudinary = await uploadCloudinary(localFilePaths, postFolderName);
+
+        if (cloudinary.length == 0) {
+            throw new ApiError(409, "Error occured while uploading profile picture.");
+        }
+    }
+        
+    
+
+
+    
+
+    
+    if(isPostExist.media && publicIds.length != 0){
         await deleteCloudinary(publicIds);
     }
 
-    const cloudinary = await uploadCloudinary(localFilePaths, postFolder);
 
-    if (!newAvatar || cloudinary.length == 0) {
-        throw new ApiError(409, "Error occured while uploading profile picture.");
-    }
-
-    cloudinary.map((item) => {
+    cloudinary && cloudinary.map((item) => {
         isPostExist.media.push({
             public_id: item.public_id,
             url: item.url,
@@ -221,13 +235,13 @@ const deletePost = asyncHandler(async (req, res) => {
         throw new ApiError(409, "Unauthprized request.");
     }
 
-    const { postId } = req.body;
+    const { id } = req.params;
 
-    if (!postId) {
+    if (!id) {
         throw new ApiError(409, "All fileds are required.");
     }
 
-    const isPostExist = await Post.findByIdAndDelete({ _id: postId });
+    const isPostExist = await Post.findByIdAndDelete({ _id: id });
 
     if (!isPostExist) {
         throw new ApiError(409, "Post not found.");
@@ -270,13 +284,13 @@ const likeUnlikePost = asyncHandler(async (req, res) => {
         throw new ApiError(409, "Unauthprized request.");
     }
 
-    const { postId } = req.body;
+    const { id } = req.query;
 
-    if (!postId) {
+    if (!id) {
         throw new ApiError(409, "All fields are required.");
     }
 
-    const isPostExist = await Post.findById({ _id: postId });
+    const isPostExist = await Post.findById({ _id: id });
 
     if (!isPostExist) {
         throw new ApiError(409, "Post not found.");
@@ -349,13 +363,13 @@ const likeUnlikeComment = asyncHandler(async (req, res) => {
         throw new ApiError(409, "Unauthprized request.");
     }
 
-    const { commentId } = req.body;
+    const { id } = req.query;
 
-    if (!commentId) {
+    if (!id) {
         throw new ApiError(409, "All fields are required.");
     }
 
-    const isCommentExist = await Comment.findById({ _id: commentId });
+    const isCommentExist = await Comment.findById({ _id: id });
 
     if (!isCommentExist) {
         throw new ApiError(409, "Comment does not exist.");
@@ -386,13 +400,14 @@ const deleteComment = asyncHandler(async (req, res) => {
         throw new ApiError(409, "Unauthprized request.");
     }
 
-    const { commentId } = req.body;
+    const { id } = req.query;
+    console.log(req.params,req.query);
 
-    if (!commentId) {
+    if (!id) {
         throw new ApiError(409, "All fields are required.");
     }
 
-    const isCommentExist = await Comment.findByIdAndDelete({ _id: commentId });
+    const isCommentExist = await Comment.findByIdAndDelete({ _id: id });
 
     if (!isCommentExist) {
         throw new ApiError(409, "Comment not found");
@@ -400,7 +415,7 @@ const deleteComment = asyncHandler(async (req, res) => {
 
 
 
-    await Post.findByIdAndDelete({ _id: isCommentExist.post_id }, {
+    await Post.findByIdAndUpdate({ _id: isCommentExist.post_id }, {
         $pull: { comments: isCommentExist._id }
     }, { new: true });
 
@@ -421,13 +436,13 @@ const readAllComment = asyncHandler(async (req, res) => {
         throw new ApiError(409, "Unauthprized request.");
     }
 
-    const { postId } = req.body;
+    const { id } = req.query;
 
-    if (!postId) {
+    if (!id) {
         throw new ApiError(409, "All fields are required.");
     }
 
-    const isPostExist = await Comment.find({ post_id: postId }).populate('user_id', 'username profile_picture').populate('replies');
+    const isPostExist = await Comment.find({ post_id: id }).populate('user_id', 'username profile_picture').populate('replies');
 
     if (!isPostExist) {
         throw new ApiError(409, "Comments not found.");
@@ -451,7 +466,7 @@ const replyPost = asyncHandler(async (req, res) => {
 
     const { commentId, reply_text } = req.body;
 
-    if (!commentId, reply_text) {
+    if (!commentId || !reply_text) {
         throw new ApiError(409, "All fields are required.");
     }
 
@@ -487,20 +502,24 @@ const likeUnlikeReply = asyncHandler(async (req, res) => {
     }
 
     const { replyIndex, commentId } = req.body;
+    
 
-    if (!replyIndex || !commentId) {
-        throw new ApiError(409, "All fields are required");
+    if (!commentId || !replyIndex) {
+        throw new ApiError(409, "All fields are required.");
     }
 
     const isCommentExist = await Comment.findById({ _id: commentId });
+   
 
-    if (!isCommentExist || isCommentExist.replies[replyIndex]) {
+    if (!isCommentExist || !isCommentExist.replies[replyIndex]) {
         throw new ApiError(409, "Comment or reply not found");
     }
 
     const reply = isCommentExist.replies[replyIndex];
+    console.log(reply);
 
-    if (reply.likes.includes[loggedUser._id]) {
+
+    if (reply.likes.includes(loggedUser._id)) {
         reply.likes.pull(loggedUser._id);
     } else {
         reply.likes.push(loggedUser._id);
@@ -524,13 +543,15 @@ const readAllReply = asyncHandler(async (req, res) => {
         throw new ApiError(409, "Unauthprized request.");
     }
 
-    const { commentId } = req.body;
+    const { id } = req.params;
+    console.log(req.query)
+     
 
-    if (!commentId) {
+    if (!id) {
         throw new ApiError(409, "All fields are required.");
     }
 
-    const isCommentExist = await Comment.findById({ _id: commentId }).populate("replies");
+    const isCommentExist = await Comment.findById({ _id: id }).populate("replies");
 
     if (!isCommentExist) {
         throw new ApiError(409, "Comment or reply not found.");
@@ -555,13 +576,13 @@ const deleteReply = asyncHandler(async (req, res) => {
 
     const { commentId, replyIndex } = req.body;
 
-    if (!commentId || replyIndex) {
+    if (!commentId || !replyIndex) {
         throw new ApiError(409, "All fields are required.");
     }
 
     const isCommentExist = await Comment.findByIdAndUpdate({ _id: commentId }, {
-        $pull: { replies: replyIndex }
-    }, { new: true }).populate("replies,user_id");
+        $pop: { replies: replyIndex }
+    }, { new: true });
 
     if (!isCommentExist) {
         throw new ApiError(409, "Reply not found.");
@@ -597,18 +618,19 @@ const saveUnsavePost = asyncHandler(async (req, res) => {
         throw new ApiError(409, "Unauthprized request.");
     }
 
-    const { postId } = req.body;
+    const { id } = req.query;
+   
 
-    if (!postId) {
+    if (!id) {
         throw new ApiError(409, "All fields are required.");
     }
 
     const user = await User.findById({ _id: loggedUser._id });
 
-    if (user.saved_posts.includes(postId)) {
-        user.saved_posts.pull(postId);
+    if (user.saved_posts.includes(id)) {
+        user.saved_posts.pull(id);
     } else {
-        user.saved_posts.push(postId);
+        user.saved_posts.push(id);
     }
 
     await user.save();

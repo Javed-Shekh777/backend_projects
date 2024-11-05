@@ -7,19 +7,19 @@ const router = require("express").Router();
 
 // Secure Post Routes 
 router.route("/create-post").post(authUser, upload.array("post"), createPost);
-router.route("/read-post").get(authUser, readPost);
-router.route("/read-all-post").get(authUser, readAllPost);
+router.route("/get-post/:id").get(authUser, readPost);
+router.route("/get-all-post").get(authUser, readAllPost);
 router.route("/update-post").post(authUser,upload.array("post"), updatePost);
-router.route("/delete-post").post(authUser, deletePost);
+router.route("/delete-post/:id").post(authUser, deletePost);
 router.route("/save-post").post(authUser, saveUnsavePost);
 router.route("/like-post").post(authUser, likeUnlikePost);
 router.route("/comment-post").post(authUser, commentPost);
 router.route("/like-comment").post(authUser, likeUnlikeComment);
 router.route("/delete-comment").post(authUser, deleteComment);
-router.route("/read-all-comment").get(authUser, readAllComment);
-router.route("/reply-post").post(authUser, replyPost);
+router.route("/get-all-comment").get(authUser, readAllComment);
+router.route("/reply-comment").post(authUser, replyPost);
 router.route("/like-reply").post(authUser, likeUnlikeReply);
-router.route("/read-all-reply").get(authUser, readAllReply);
+router.route("/get-all-reply/:id").get(authUser, readAllReply);
 router.route("/delete-reply").post(authUser, deleteReply);
 
 

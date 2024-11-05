@@ -662,7 +662,6 @@ const profilePicture = asyncHandler(async (req, res) => {
 });
 
 
-
 const userBlockUnblock = asyncHandler(async (req, res) => {
 
     const loggedUser = req.user;
@@ -699,8 +698,6 @@ const userBlockUnblock = asyncHandler(async (req, res) => {
 });
 
 
-
-
 const userBlockList = asyncHandler(async (req, res) => {
 
     const loggedUser = req.user;
@@ -722,7 +719,6 @@ const userBlockList = asyncHandler(async (req, res) => {
 
 
 });
-
 
 
 const closeUncloseFriend = asyncHandler(async (req, res) => {
@@ -760,7 +756,6 @@ const closeUncloseFriend = asyncHandler(async (req, res) => {
 });
 
 
-
 const privateAccount = asyncHandler(async (req, res) => {
     const loggedUser = req.user;
 
@@ -785,6 +780,7 @@ const privateAccount = asyncHandler(async (req, res) => {
 
 
 });
+
 
 const userProfile = asyncHandler(async (req, res) => {
 

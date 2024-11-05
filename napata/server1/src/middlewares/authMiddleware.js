@@ -32,4 +32,13 @@ const isAuthenticated = asyncHandler(async (req, res, next) => {
 
 });
 
-module.exports = isAuthenticated;
+
+const isAdmin = (req, res, next) => {
+    const role = req.user.role;
+    if (role === 'admin') {
+        next();
+    }
+    throw new ApiError(402, "Unauthorized access.");
+}
+
+module.exports = { isAuthenticated, isAdmin };

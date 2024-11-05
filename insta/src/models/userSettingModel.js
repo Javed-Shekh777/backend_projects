@@ -14,16 +14,16 @@ const userSettingSchema = new mongoose.Schema({
         mentions: { type: Boolean, default: true },
     },
     privacy: {
-        accountPrivacy: String,
-        activityStatus: Boolean,
-        storySharing: Boolean,
-        messageReplies: String,
-        tagging: String
+        accountPrivacy: {type:String,default:"public"},
+        activityStatus: {type:Boolean,default:true},
+        storySharing: {type:Boolean,default:true},
+        messageReplies: {type:String,default:"everyone"},
+        tagging: {type:String,default:"everyone"}
     },
     generalSettings: {
-        language: { type: String },
-        theme: { type: String },
-        time_zone: { type: String },
+        language: { type: String ,default:"en"},
+        theme: { type: String ,default:"dark"},
+        time_zone: { type: String ,default:"UTC"},
         autoPlayVideos: { type: Boolean, default: true }
     }
 

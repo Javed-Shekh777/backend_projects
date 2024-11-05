@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const ApiError = require("../utils/ApiError");
 
-const sendEmail = async (username, email, code) => {
+const sendEmail = async (username, email, token) => {
 
     try {
         const transporter = nodemailer.createTransport({
@@ -92,15 +92,14 @@ const sendEmail = async (username, email, code) => {
         <div class="content">
             <h2>Hi ${username},</h2>
             <p>We received a request to reset your password. Please use the verification code below to reset your password:</p>
-            <h3 style="color: #333;">${code}</h3>
             <p>This code is valid for the next 10 minutes. If you didn’t request this, please ignore this email.</p>
             <p>To reset your password, click the button below:</p>
-            <a href="{{resetLink}}">Reset Password</a>
+            <a href="http://localhost:8080/forget?token=${token}}">Reset Password</a>
             <p>If the button above doesn't work, copy and paste this link into your browser:</p>
-            <p>{{resetLink}}</p>
+             
         </div>
         <div class="footer">
-            <p>&copy; 2024 Your Company. All rights reserved.</p>
+            <p>&copy; 2024  Company. All rights reserved.</p>
         </div>
     </div>
 </body>
@@ -110,9 +109,11 @@ const sendEmail = async (username, email, code) => {
         };
 
         const mailResponse = await transporter.sendMail(mailOptions);
+        console.log(mailResponse);
 
         return mailResponse;
     } catch (error) {
+        console.log(error);
         throw new ApiError(error.message);
 
     }
