@@ -1,0 +1,145 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Reset</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh; /* Full height of the viewport */
+        margin: 0; /* Remove default margin */
+        background-color: #f0f0f0; /* Light background color */
+        font-family: Arial, sans-serif; /* Font style */
+      }
+
+      .form-container {
+        background-color: white; /* White background for the form */
+        padding: 20px; /* Padding around the form */
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        width: 300px; /* Fixed width for the form */
+      }
+
+      h2 {
+        text-align: center; /* Center the heading */
+        margin-bottom: 20px; /* Space below the heading */
+      }
+
+      .form-group {
+        margin-bottom: 15px; /* Space between form fields */
+      }
+
+      label {
+        display: block; /* Block display for labels */
+        margin-bottom: 5px; /* Space below the label */
+      }
+
+      input[type="password"] {
+        width: 100%; /* Full width of the input */
+        padding: 10px; /* Padding inside the input */
+        border: 1px solid #ccc; /* Border color */
+        border-radius: 4px; /* Rounded corners for input */
+      }
+
+      button {
+        width: 100%; /* Full width for the button */
+        padding: 10px; /* Padding inside the button */
+        background-color: #007bff; /* Button color */
+        color: white; /* Text color */
+        border: none; /* No border */
+        border-radius: 4px; /* Rounded corners for button */
+        cursor: pointer; /* Pointer cursor on hover */
+        font-size: 16px; /* Font size */
+      }
+
+      button:hover {
+        background-color: #0056b3; /* Darker shade on hover */
+      }
+
+      #alert {
+        margin: 20px 0px;
+        padding: 10px;
+        border: 1px solid;
+        width: 300px;
+        border-radius: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="alert" style="display: none"></div>
+    <div class="form-container">
+      <h2>Reset Password</h2>
+      <form id="form">
+        <div class="form-group">
+          <label for="new-password">New Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="cpassword" name="cpassword" required />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <script>
+      let alertBox = document.getElementById("alert");
+      let token = (email = "");
+
+      function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        token = params.get("token");
+        email = params.get("email");
+      }
+
+      getQueryParams();
+
+      console.log(token, email);
+      document
+        .getElementById("form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          alertBox.innerHTML = "";
+
+          const formData = new FormData(this);
+          const password = formData.get("password");
+          const cpassword = formData.get("cpassword");
+
+          if (password !== cpassword) {
+            alertBox.style.display = "block";
+            alertBox.innerHTML = "Password not matched";
+            return;
+          }
+
+          fetch("http://localhost:8080/api/v1/user/reset-password", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              password: password,
+              token: token,
+            }),
+          })
+            .then(async (response) => {
+              if (!response.ok) {
+                const errorData = await response.json();
+                console.log("2 : ", errorData.message);
+                alertBox.style.display = "block";
+                alertBox.innerText = errorData.message;
+                return;
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Success:", data);
+              alertBox.style.display = "block";
+              alertBox.innerText = data?.message;
+            });
+        });
+    </script>
+  </body>
+</html>

@@ -222,8 +222,6 @@ const checkUsername = asyncHandler(async (req, res) => {
 
     const { username } = req.query;
 
-    console.log(username);
-
     const newUsername = await generateUsername(username);
 
     if (username !== newUsername) {
@@ -231,7 +229,7 @@ const checkUsername = asyncHandler(async (req, res) => {
             .json(new ApiResponse(200, { username: newUsername }, "Username is available."));
     } else {
         return res.status(201)
-            .json(new ApiResponse(200, "", "Username is available."));
+            .json(new ApiResponse(200, "", "Username is unavailable."));
     }
 
 });
